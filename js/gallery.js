@@ -64,26 +64,43 @@ const images = [
   },
 ];
 
-// Отримуємо елементи
-        const imageList = document.getElementById('image-list');
-        const largeImage = document.getElementById('large-image');
-        const imageDescription = document.getElementById('image-description');
 
-        // Створюємо список зображень
-        images.forEach((image) => {
-            const listItem = document.createElement('li'); 
-            const imgElement = document.createElement('img');
+const galleryContainer = document.querySelector(".gallery");
 
-            imgElement.src = image.preview; 
-            imgElement.alt = image.description; 
-            imgElement.title = image.description; 
 
-            // При натисканні змінюємо велике зображення
-            imgElement.addEventListener('click', () => {
-                largeImage.src = image.original;
-                imageDescription.textContent = image.description;
-            });
+const galleryMarkup = images
+  .map(
+    ({ preview, original, description }) => `
+    <li class="gallery-item">
+      <a class="gallery-link" href="${original}">
+        <img
+          class="gallery-image"
+          src="${preview}"
+          data-source="${original}"
+          alt="${description}"
+        />
+      </a>
+    </li>
+  `
+  )
+  .join("");
 
-            listItem.appendChild(imgElement);
-            imageList.appendChild(listItem);
-        });
+
+galleryContainer.innerHTML = galleryMarkup;
+
+
+galleryContainer.addEventListener("click", (event) => {
+  event.preventDefault(); 
+
+  if (event.target.classList.contains("gallery-image")) {
+    const largeImageURL = event.target.dataset.source; 
+    console.log("Посилання на велике зображення:", largeImageURL);
+
+    const instance = basicLightbox.create(`
+      <img src="${largeImageURL}" width="1112" height="640">`);
+
+    instance.show(); 
+  }
+  
+});
+

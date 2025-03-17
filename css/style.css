@@ -30,19 +30,6 @@
     transform: scale(1.1);
 }
 
-.large-view {
-    margin-top: 20px;
-    text-align: center;
-}
 
-#large-image {
-    max-width: 100%;
-    height: auto;
-    display: block;
-    margin: 0 auto;
-}
 
-#image-description {
-    font-size: 18px;
-    margin-top: 10px;
-}
+
